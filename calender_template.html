@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calendar</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px; /* Space between tables */
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            height: 100px;
+            width: 14.28%; /* 100% / 7 days */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .empty {
+            background-color: #e0e0e0;
+        }
+
+        .date-number {
+            font-weight: bold;
+        }
+
+        .event {
+            margin-top: 5px;
+            padding: 2px 4px;
+            background-color: #d9edf7;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h2>Calendar</h2>
+
+{% for month in months %}
+<h3>{{ month.year_month }}</h3>
+<table>
+    <tr>
+        <th>Sunday</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+    </tr>
+    {% for week in month.weeks %}
+    <tr>
+        {% for day in week %}
+        {% if day %}
+        <td>
+            <div class="date-number">{{ day }}</div>
+            {% if month.events.get(day) %}
+            {% for event in month.events.get(day) %}
+            <div class="event">
+                <strong>{{ event.Name }}</strong><br>
+                <em>{{ event.Students | join(', ') }}</em>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </td>
+        {% else %}
+        <td class="empty"></td>
+        {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endfor %}
+
+</body>
+</html>
