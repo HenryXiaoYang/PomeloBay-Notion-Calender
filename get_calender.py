@@ -5,7 +5,7 @@ from datetime import datetime
 import aiohttp
 from jinja2 import Template
 
-from setting import NOTION_TOKEN
+from setting import NOTION_TOKEN, PROXY_URL
 
 
 async def get_calendar(calendar_template):
@@ -14,7 +14,7 @@ async def get_calendar(calendar_template):
         "Notion-Version": "2022-06-28",
         "Content-Type": "application/json"
     }
-    async with aiohttp.ClientSession(headers=headers, connector=aiohttp.TCPConnector(ssl=False)) as session:
+    async with aiohttp.ClientSession(headers=headers, connector=aiohttp.TCPConnector(ssl=False), proxy=PROXY_URL) as session:
         all_data = []
         start_cursor = ""
         for _ in range(10):
