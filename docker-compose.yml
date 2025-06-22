@@ -12,5 +12,3 @@ services:
     environment:
       - NOTION_TOKEN=${NOTION_TOKEN}
       - PROXY_URL=${PROXY_URL}
-    env_file:
-      - .env 
