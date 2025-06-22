@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        - http_proxy=${PROXY_URL}
+        - https_proxy=${PROXY_URL}
+    ports:
+      - "3030:3030"
+    environment:
+      - NOTION_TOKEN=${NOTION_TOKEN}
+      - PROXY_URL=${PROXY_URL}
+    env_file:
+      - .env 

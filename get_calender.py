@@ -35,8 +35,16 @@ async def get_calendar(calendar_template):
     # Process and clean data
     cleaned_data = []
     for item in all_data:
-        date_str = item['properties']['Date']['date']['start']  # Expected format: 'YYYY-MM-DD'
+        # WHO EVER WROTE THE NOTION API IS GOD DAMN STUPID.
+        date = item.get('properties', {}).get('Date', {}).get('date', {})
+        if not date:  # Not valid
+            continue
+        date_str = date.get('start', None)  # Expected format: 'YYYY-MM-DD'
+        if not date_str:  # Not valid
+            continue
         name = item['properties']['Name']['title'][0]['plain_text']
+        if name == '学年最后一天':
+            pass
         students = [student['name'] for student in item['properties']['负责学生']['multi_select']]
 
         # Parse the date
